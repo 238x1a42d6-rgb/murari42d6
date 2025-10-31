@@ -1,0 +1,104 @@
+Question 16: How to Show this result based on the given details:
+
+True-answers=6
+Wrong -answers=0
+Total-questions=6
+
+ 
+
+q08-2.png
+source code:import 'package:flutter/material.dart';
+
+class ResultScreen extends StatelessWidget {
+  final int trueAnswers;
+  final int wrongAnswers;
+  final int totalQuestions;
+
+  const ResultScreen({
+    super.key,
+    required this.trueAnswers,
+    required this.wrongAnswers,
+    required this.totalQuestions,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Calculate score percentage
+    double scorePercent = (trueAnswers / totalQuestions) * 100;
+
+    // Decide which image and message to show
+    String imagePath;
+    String message;
+
+    if (trueAnswers == totalQuestions) {
+      imagePath = 'assets/images/success.png'; // ✅ all correct
+      message = 'Excellent! You got all answers correct!';
+    } else if (trueAnswers >= totalQuestions / 2) {
+      imagePath = 'assets/images/good.png'; // 😃 mostly correct
+      message = 'Good job! Keep practicing to get all correct.';
+    } else {
+      imagePath = 'assets/images/try_again.png'; // 😔 few correct
+      message = 'Don’t worry! Try again to improve your score.';
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Quiz Result'),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: Center(
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                imagePath,
+                width: 150,
+                height: 150,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 30),
+              Text(
+                message,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Total Questions: $totalQuestions',
+                style: const TextStyle(fontSize: 16),
+              ),
+              Text(
+                'Correct Answers: $trueAnswers',
+                style: const TextStyle(fontSize: 16, color: Colors.green),
+              ),
+              Text(
+                'Wrong Answers: $wrongAnswers',
+                style: const TextStyle(fontSize: 16, color: Colors.red),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Score: ${scorePercent.toStringAsFixed(1)}%',
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.deepPurple),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+ 
+
+Hint 1:- Use imageview and textview, containers for showing the image and text.
+
+Hint 2:- Add the logic for showing the result based on true, and false values out of total questions.
