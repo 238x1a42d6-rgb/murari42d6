@@ -1,0 +1,77 @@
+Question 17: Show the start and end date in the date picker. But the end date should be 29 days ago from the start date. What will be your approach to getting this problem statement?
+source code:import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // for date formatting
+
+class DateRangeExample extends StatefulWidget {
+  const DateRangeExample({super.key});
+
+  @override
+  State<DateRangeExample> createState() => _DateRangeExampleState();
+}
+
+class _DateRangeExampleState extends State<DateRangeExample> {
+  DateTime? startDate;
+  DateTime? endDate;
+
+  // Date formatter
+  final DateFormat formatter = DateFormat('dd-MM-yyyy');
+
+  Future<void> _selectStartDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        startDate = pickedDate;
+        endDate = pickedDate.subtract(const Duration(days: 29));
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Date Picker Example"),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => _selectStartDate(context),
+              child: const Text("Select Start Date"),
+            ),
+            const SizedBox(height: 30),
+            if (startDate != null) ...[
+              Text(
+                "Start Date: ${formatter.format(startDate!)}",
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "End Date (29 days ago): ${formatter.format(endDate!)}",
+                style: const TextStyle(fontSize: 18, color: Colors.deepPurple),
+              ),
+            ] else
+              const Text(
+                "Please select a start date",
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+Hint 1:- Use the date picker library for selecting the start and end date.
+
+Hint 2:- Add the logic which is end data should be 29 days ago from the start date.
