@@ -1,0 +1,60 @@
+Question 18: Create a clock. What will be your approach to solving this problem statement?
+source code:import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+class OneSecondClock extends StatefulWidget {
+  const OneSecondClock({super.key});
+
+  @override
+  State<OneSecondClock> createState() => _OneSecondClockState();
+}
+
+class _OneSecondClockState extends State<OneSecondClock> {
+  String currentTime = '';
+
+  @override
+  void initState() {
+    super.initState();
+    startClock();
+  }
+
+  void startClock() {
+    // Set initial time
+    currentTime = DateFormat('HH:mm:ss').format(DateTime.now());
+
+    // Timer that runs once after 1 second
+    Timer(const Duration(seconds: 1), () {
+      setState(() {
+        currentTime = DateFormat('HH:mm:ss').format(DateTime.now());
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("One-Second Clock"),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: Center(
+        child: Text(
+          currentTime,
+          style: const TextStyle(
+            fontSize: 50,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+Hint 1:- Use flutter inbuilt library
+
+Hint 2:- Use only a timer.
+
+Hint 3:- Clock runs only for 1 sec.
